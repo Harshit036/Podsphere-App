@@ -1,0 +1,22 @@
+.podcastPlayWrapper {
+  height: 100vh;
+  width: 100%;
+}
+.podcastInformation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  height: 80%;
+  width: 100%;
+}
+.audio-image-wrapper {
+  padding: 1rem;
+}
+.audio-title {
+  color: white;
+}
+.playerFooter {
+  /* height: 20%; */
+  /* width: 100%; */
+}

@@ -1,0 +1,23 @@
+.form-control {
+  font-size: 2rem;
+  padding: 1rem;
+  border-radius: 8px;
+  width: 95%;
+  border: 1px solid #010334;
+  background-color: rgb(255, 255, 255, 0.4) !important;
+  line-height: 4.44%;
+}
+
+.form-control:focus {
+  opacity: 0.8;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+::placeholder {
+  opacity: 0.8;
+}

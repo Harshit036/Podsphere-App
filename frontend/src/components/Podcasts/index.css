@@ -1,0 +1,9 @@
+.podcastWrapper {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #17171a;
+}
+.allPodcastWrapper {
+  display: flex;
+  padding: 2rem;
+}

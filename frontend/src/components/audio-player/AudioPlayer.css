@@ -1,0 +1,84 @@
+.audio-player {
+  position: sticky;
+  bottom: 0;
+  position: -webkit-sticky;
+  display: flex;
+  width: 100%;
+  min-height: 20vh;
+  background-color: #222226;
+  justify-content: space-around;
+  max-height: 100%;
+}
+
+/* Display Track Css */
+.podcastInfo {
+  color: white;
+  padding: 2rem;
+  width: 20%;
+}
+.audio-image-wrapper {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.audio-image {
+  width: 100%;
+  /* padding: 2rem; */
+  height: 100%;
+}
+.audio-info {
+  display: flex;
+  height: 100%;
+}
+.audio-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.audio-title {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.audio-author {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+/* Controls CSS */
+.controls-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
+}
+.progress {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50%;
+}
+.currTime,
+.totalTime {
+  color: white;
+}
+.progressBar {
+  width: 80%;
+}
+
+/* Volume CSS */
+
+.volumeWrapper {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

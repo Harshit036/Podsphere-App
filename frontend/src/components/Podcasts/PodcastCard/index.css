@@ -1,0 +1,31 @@
+.podcastCardWrapper {
+  min-width: 125px;
+  min-height: 125px;
+  max-width: 125px;
+  max-height: 125px;
+  color: white;
+  border: 2px blue solid;
+}
+
+.podcastImgWrapper {
+  min-width: 125px;
+  min-height: 125px;
+  max-width: 125px;
+  max-height: 125px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+.podcastImg {
+  width: 100%;
+}
+.podcastName {
+  text-align: center;
+  font-size: 1.8rem;
+  padding: 0.5rem;
+}
+.podcastArtist {
+  text-align: center;
+  font-size: 1.4rem;
+  padding: 0.5rem;
+}

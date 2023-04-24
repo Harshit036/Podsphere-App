@@ -1,0 +1,26 @@
+.homeWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+}
+.homeHeader {
+  display: flex;
+}
+.homePodcasts {
+  width: 85%;
+  background-color: #17171a;
+}
+.homeSidebar {
+  width: 15%;
+  max-height: 80vh;
+  position: sticky;
+  top: 0;
+}
+.homeFooter {
+  width: 100%;
+  min-height: 20vh;
+  position: sticky;
+  bottom: 0;
+  z-index: 100;
+}

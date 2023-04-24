@@ -1,0 +1,29 @@
+.podcastRowWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.podcastsSlider {
+  width: 100%;
+}
+
+.carouselWrapper {
+  height: 100%;
+}
+.react-multi-carousel-list {
+  height: 100%;
+}
+.carouselItem {
+  transition: all linear 0.4s;
+}
+.podcastRowHeading {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+.slick-list,
+.slick-slider,
+.slick-track {
+  padding: 3rem;
+  border-radius: 8px;
+}

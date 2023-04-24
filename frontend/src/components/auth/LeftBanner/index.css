@@ -1,0 +1,39 @@
+.messageWrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #000000;
+  color: #ffffff;
+  font-family: "Rogan";
+}
+
+.titleCompany {
+  text-align: center;
+  font-size: 4rem;
+  height: 50vh;
+  /* margin: auto; */
+  padding: 2rem 0 0 0;
+}
+
+.messageCompany {
+  display: flex;
+  flex-direction: column;
+  height: 50vh;
+  width: 80%;
+  margin: auto;
+  font-size: 5.6rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.changeCol {
+  color: blue;
+}
+
+.font4 {
+  font-size: 4rem;
+}
+
+.font5-6 {
+  font-size: 5.6rem;
+}

@@ -1,0 +1,45 @@
+.userDetailWrapper {
+  display: flex;
+}
+
+.midWrapperUser {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 80%;
+  width: 50%;
+}
+.pageMessage {
+  text-align: center;
+}
+
+.createAccountBtn {
+  display: flex;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-size: 1rem;
+  background-color: #dfa114;
+  width: 100%;
+}
+
+.checkInputs {
+  width: 95%;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.4);
+  border: 1px solid #010334;
+  border-radius: 8px;
+}
+
+.createIDInputWrap {
+  margin: 2rem;
+}
+
+#pwdnote {
+  padding: 1rem;
+}
+
+@media only screen and (max-width: 425px) {
+  .midWrapperUser {
+    width: 100%;
+  }
+}

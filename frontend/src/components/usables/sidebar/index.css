@@ -1,0 +1,61 @@
+.sidebarWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+  width: 100%;
+  background: #242528;
+  /* background-image: url("../../../assets/footerBg.png");
+  background-repeat: no-repeat;
+  background-size: cover; */
+  font-family: "Rogan";
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px;
+  color: rgba(255, 255, 255, 0.6);
+}
+.sidebarRoutes {
+  display: flex;
+  flex-direction: column;
+  height: 40%;
+  justify-content: space-around;
+}
+.sidebarRoute {
+  display: flex;
+  padding-left: 2rem;
+}
+.sidebarRoute:hover {
+  cursor: pointer;
+  background-color: #494c7b;
+}
+#sideActive {
+  border-left: 3px solid #dfa114;
+  background: linear-gradient(
+    90.3deg,
+    rgba(255, 255, 255, 0.1) 0.26%,
+    rgba(255, 255, 255, 0) 56.49%
+  );
+}
+.routeIcon {
+  padding: 1rem;
+}
+.routeName {
+  font-size: 1.8rem;
+  padding: 1rem;
+}
+
+.sidebarOptions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 20%;
+  font-size: 1.6rem !important;
+}
+.sidebarLogout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  width: 60%;
+}
