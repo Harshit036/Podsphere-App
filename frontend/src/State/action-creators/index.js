@@ -11,3 +11,10 @@ export const updateIsPlaying = (isPlaying) => {
     payload: isPlaying,
   };
 };
+
+export const updateUserId = (userId) => {
+  return {
+    type: "updateuserid",
+    payload: userId,
+  };
+};

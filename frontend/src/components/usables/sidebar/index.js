@@ -2,7 +2,7 @@ import React from "react";
 import SidebarFields from "./NavRoutes.js";
 import "./index.css";
 
-const Sidebar = () => {
+const Sidebar = ({ userId }) => {
   return (
     <div className="sidebarWrapper">
       <div className="sidebarRoutes">

@@ -7,29 +7,20 @@ const HttpError = require("../models/http-error");
 const Podcast = require("../models/podcast");
 const User = require("../models/user");
 
-const getPodcastById = async (req, res, next) => {
-  const podcastId = req.params.pid;
-
-  let podcast;
+const getUserId = async (req, res, next) => {
+  const { email } = req.body.email;
+  let user;
   try {
-    podcast = await Podcast.findById(podcastId);
+    user = await User.find({ email: email });
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong, could not find a podcast.",
+      "Creating podcast failed, please try again.",
       500
     );
     return next(error);
   }
 
-  if (!podcast) {
-    const error = new HttpError(
-      "Could not find podcast for the provided id.",
-      404
-    );
-    return next(error);
-  }
-
-  res.json({ podcast: podcast.toObject({ getters: true }) });
+  res.json(user);
 };
 
 const getPodcastsByUserId = async (req, res, next) => {
@@ -69,21 +60,21 @@ const createPodcast = async (req, res, next) => {
     );
   }
 
-  const { title, artist, audio, image } = req.body;
+  const { name, artist, song, img, userId } = req.body;
 
   const createdPodcast = new Podcast({
-    title,
-    artist,
-    image: image,
-    audio: audio,
+    title: name,
+    artist: artist,
+    image: img,
+    audio: song,
     playback: 0,
     likes: 0,
-    creator: req.userData.userId,
+    creator: userId,
   });
 
   let user;
   try {
-    user = await User.findById(req.userData.userId);
+    user = await User.findById(userId);
   } catch (err) {
     const error = new HttpError(
       "Creating podcast failed, please try again.",
@@ -218,7 +209,7 @@ const deletePodcast = async (req, res, next) => {
   res.status(200).json({ message: "Deleted podcast." });
 };
 
-exports.getPodcastById = getPodcastById;
+exports.getUserId = getUserId;
 exports.getPodcastsByUserId = getPodcastsByUserId;
 exports.createPodcast = createPodcast;
 exports.updatePodcast = updatePodcast;

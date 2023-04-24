@@ -1,40 +1,20 @@
-import React, { useState, useRef, useEffect } from "react";
-import {
-  faCheck,
-  faTimes,
-  faInfoCircle,
-} from "@fortawesome/free-solid-svg-icons";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./index.css";
-import GoogleButton from "react-google-button";
-import { useNavigate, Link } from "react-router-dom";
-import Message from "../LeftBanner";
-import Homepage from "../../home";
-import GoogleIcon from "../../../assets/google.png";
-import Showpassword from "../../../assets/showPass.png";
-import { useSelector } from "react-redux";
 import { useUserAuth } from "../../context/UserAuthContext";
+import Message from "../LeftBanner";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import "./index.css";
 
-const PHN_REGEX = /^[0-9]{15,15}$/;
-
-const Login = () => {
-  // const { user, googleSignIn } = useUserAuth();
-  const navigate = useNavigate();
+const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
   const [password, setPassword] = useState("");
-  const [visible, setVisible] = useState(false);
-  const [errMsg, setErrMsg] = useState("");
-  const [error, setError] = useState("Enter a 10 digit phone number");
-  const emailRef = useRef();
-  const nameRef = useRef();
-  const errRef = useRef();
-  const [emailFocus, setEmailFocus] = useState(false);
-  const phonenum = useSelector((state) => state.phonenum);
+  const { signUp } = useUserAuth();
+  let navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const userdata = {
@@ -43,44 +23,16 @@ const Login = () => {
       password: password,
     };
     setError("");
-    if (password && email) {
-      try {
-        const response = await axios.post(
-          "http://localhost:5000/api/users/signup",
-          userdata
-        );
-        console.log("response data is ", response);
-        navigate("/login");
-      } catch (err) {
-        console.log(err);
-        // toast.error(err.response.data, {
-        //   position: "top-center",
-        //   autoClose: 5000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        //   theme: "light",
-        // });
-      }
-    } else {
-      toast("Please enter valid user details");
-    }
-  };
-
-  const changeVisiblity = () => {
-    setVisible(!visible);
-  };
-
-  const handleGoogleSignIn = async (e) => {
-    e.preventDefault();
     try {
-      // await googleSignIn();
-      // console.log(user);
-      navigate("/usertype");
-    } catch (error) {
-      console.log(error.message);
+      await signUp(email, password);
+      const response = await axios.post(
+        "http://localhost:5000/api/users/signup",
+        userdata
+      );
+      console.log("response data is ", response);
+      navigate("/");
+    } catch (err) {
+      setError(err.message);
     }
   };
   return (
@@ -100,76 +52,47 @@ const Login = () => {
             </span>{" "}
             Please enter your details.
           </div>
-          <form onSubmit={handleSubmit} id="loginForm">
-            <div className="passwordWrap">
-              <input
-                type="text"
-                id="password"
-                placeholder="Name"
-                autoComplete="off"
-                onChange={(e) => setName(e.target.value)}
-                value={name}
-                required
-                className="inputPassword"
-              />
-            </div>
-            <div className="passwordWrap">
-              <input
-                type="text"
-                id="password"
-                placeholder="Email"
-                autoComplete="off"
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-                required
-                className="inputPassword"
-              />
-            </div>
-            <div className="passwordWrap">
-              <input
-                type={visible ? "text" : "password"}
-                id="password"
-                placeholder="Password"
-                autoComplete="off"
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
-                required
-                className="inputPassword"
-              />
-              <div className="showPassword">
-                <Button className="showPasswordBtn" onClick={changeVisiblity}>
-                  <img src={Showpassword} alt="/" />
+          <div className="p-4 box">
+            {/* <h2 className="mb-3">Firebase Auth Signup</h2> */}
+            {error && <Alert variant="danger">{error}</Alert>}
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Control
+                  type="name"
+                  placeholder="Name"
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Control
+                  type="email"
+                  placeholder="Email address"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </Form.Group>
+
+              <div className="d-grid gap-2">
+                <Button variant="primary" type="Submit">
+                  Sign up
                 </Button>
               </div>
-            </div>
-          </form>
-          <button
-            type="submit"
-            className="yellowBtn"
-            form="loginForm"
-            value="Submit"
-          >
-            Login
-          </button>
-          {/* <Button className="whiteBtn" onClick={handleGoogleSignIn}>
-            <div className="googleSignUp">
-              <div className="googleIcon">
-                <img src={GoogleIcon} alt="/" className="GoogleImg" />
-              </div>
-              <div className="googleMessage">Sign in with Google</div>
-            </div>
-          </Button> */}
-          <div className="notRegistered">
-            Already Registered?
-            <Link className="linkStyle1 notRegistered" to="/login">
-              Log in
-            </Link>
+            </Form>
           </div>
-          <ToastContainer />
+          <div className="p-4 box mt-3 text-center">
+            Already have an account? <Link to="/login">Log In</Link>
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Signup;

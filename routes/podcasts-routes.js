@@ -7,7 +7,7 @@ const checkAuth = require("../middleware/check-auth");
 
 const router = express.Router();
 
-router.get("/:pid", podcastsControllers.getPodcastById);
+router.post("/getUserId", podcastsControllers.getUserId);
 
 router.get("/user/:uid", podcastsControllers.getPodcastsByUserId);
 

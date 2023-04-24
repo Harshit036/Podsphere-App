@@ -1,40 +1,32 @@
-import React, { useState, useRef, useEffect } from "react";
-import {
-  faCheck,
-  faTimes,
-  faInfoCircle,
-} from "@fortawesome/free-solid-svg-icons";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./index.css";
 import GoogleButton from "react-google-button";
-import { useNavigate, Link } from "react-router-dom";
-import Message from "../LeftBanner";
-import Homepage from "../../home";
-import GoogleIcon from "../../../assets/google.png";
-import Showpassword from "../../../assets/showPass.png";
-import { useSelector } from "react-redux";
 import { useUserAuth } from "../../context/UserAuthContext";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
-const PHN_REGEX = /^[0-9]{15,15}$/;
+import Message from "../LeftBanner";
+import "./index.css";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../../State/index.js";
 
 const Login = () => {
-  // const { user, googleSignIn } = useUserAuth();
-  const navigate = useNavigate();
+  const userId = useSelector((state) => state.userId);
+  const [localId, setLocalId] = useState(null);
+  useEffect(() => {
+    setLocalId(userId);
+  }, [userId]);
+
+  const dispatch = useDispatch();
+  const { updateUserId } = bindActionCreators(actionCreators, dispatch);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [visible, setVisible] = useState(false);
-  const [errMsg, setErrMsg] = useState("");
-  const [error, setError] = useState("Enter a 10 digit phone number");
-  const [validNum, setValidNum] = useState(false);
-  const emailRef = useRef();
-  const nameRef = useRef();
-  const errRef = useRef();
-  const [emailFocus, setEmailFocus] = useState(false);
-  const phonenum = useSelector((state) => state.phonenum);
+  const [error, setError] = useState("");
+  const { logIn, googleSignIn } = useUserAuth();
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const userdata = {
@@ -42,35 +34,32 @@ const Login = () => {
       password: password,
     };
     setError("");
-    if (password && email) {
-      try {
-        const response = await axios.post(
-          "http://localhost:5000/api/users/login",
-          userdata
-        );
-        navigate("home");
-      } catch (err) {
-        console.log(err.response.data);
-      }
-    } else {
-      toast("Please enter valid user details");
-    }
-  };
 
-  const changeVisiblity = () => {
-    setVisible(!visible);
+    try {
+      await logIn(email, password);
+      const response = await axios.post(
+        "http://localhost:5000/api/users/login",
+        userdata
+      );
+      console.log("userId in login is ", response.data.userId);
+      updateUserId(response.data.userId);
+      console.log("userid global is ", localId);
+      navigate("/home");
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   const handleGoogleSignIn = async (e) => {
     e.preventDefault();
     try {
-      // await googleSignIn();
-      // console.log(user);
-      navigate("/usertype");
+      await googleSignIn();
+      navigate("/home");
     } catch (error) {
       console.log(error.message);
     }
   };
+
   return (
     <div className="loginWrapper">
       <div className="messageLogin">
@@ -87,60 +76,44 @@ const Login = () => {
             </span>{" "}
             Please enter your details.
           </div>
-          <form onSubmit={handleSubmit} id="loginForm">
-            <div className="passwordWrap">
-              <input
-                type="text"
-                id="password"
-                placeholder="Email"
-                autoComplete="off"
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-                required
-                className="inputPassword"
-              />
-            </div>
-            <div className="passwordWrap">
-              <input
-                type={visible ? "text" : "password"}
-                id="password"
-                placeholder="Password"
-                autoComplete="off"
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
-                required
-                className="inputPassword"
-              />
-              <div className="showPassword">
-                <Button className="showPasswordBtn" onClick={changeVisiblity}>
-                  <img src={Showpassword} alt="/" />
+          <div className="p-4 box">
+            {/* <h2 className="mb-3">Firebase Auth Login</h2> */}
+            {error && <Alert variant="danger">{error}</Alert>}
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Control
+                  type="email"
+                  placeholder="Email address"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </Form.Group>
+
+              <div className="d-grid gap-2">
+                <Button variant="primary" type="Submit">
+                  Log In
                 </Button>
               </div>
+            </Form>
+            <hr />
+            <div>
+              <GoogleButton
+                className="g-btn"
+                type="dark"
+                onClick={handleGoogleSignIn}
+              />
             </div>
-          </form>
-          <button
-            type="submit"
-            className="yellowBtn"
-            form="loginForm"
-            value="Submit"
-          >
-            Login
-          </button>
-          {/* <Button className="whiteBtn" onClick={handleGoogleSignIn}>
-            <div className="googleSignUp">
-              <div className="googleIcon">
-                <img src={GoogleIcon} alt="/" className="GoogleImg" />
-              </div>
-              <div className="googleMessage">Sign in with Google</div>
-            </div>
-          </Button> */}
-          <div className="notRegistered">
-            Don’t have an account?{" "}
-            <Link className="linkStyle1 notRegistered" to="/signup">
-              Sign Up for free
-            </Link>
           </div>
-          <ToastContainer />
+          <div className="p-4 box mt-3 text-center">
+            Don't have an account? <Link to="/signup">Sign up</Link>
+          </div>
         </div>
       </div>
     </div>

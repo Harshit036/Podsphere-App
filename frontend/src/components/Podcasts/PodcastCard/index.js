@@ -18,7 +18,7 @@ const PodcastCard = ({
     const data = {
       id: podcastId,
     };
-    navigate("playPodcast", { state: data });
+    navigate("/playPodcast", { state: data });
   };
   return (
     <div className="podcastCardWrapper" onClick={podcastClick} ref={ref}>

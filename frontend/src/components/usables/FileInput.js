@@ -11,11 +11,14 @@ const FileInput = ({ name, label, value, type, handleInputState, ...rest }) => {
 
   const handleUpload = () => {
     setProgressShow(true);
-    const fileName = new Date().getTime() + value.name;
+    // const fileName = new Date().getTime() + value.name;
+    const fileName = value.name;
+    // console.log(fileName);
     const storageRef = ref(
       storage,
       type === "audio" ? `/audio/${fileName}` : `/images/${fileName}`
     );
+    // console.log(storageRef);
     const uploadTask = uploadBytesResumable(storageRef, value);
     uploadTask.on(
       "state_changed",
